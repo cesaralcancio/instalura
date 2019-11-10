@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Version
+
+This project use NVM version 0.34.0<br/>
+Node version v10.15.3<br/>
+Create React App Version 3.0.1<br/>
+
 ## Available Scripts
 
 In the project directory, you can run:
