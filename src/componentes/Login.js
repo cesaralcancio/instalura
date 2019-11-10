@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { EventEmitter } from 'events';
+import { browserHistory } from 'react-router';
 
 export default class Login extends Component {
 
-    constructor() {
-        super();
-        this.state = {msg: ''};
+    constructor(props) {
+        super(props);
+
+        this.state = {msg:this.props.location.query.msg};
     }
 
     envia(event) {
@@ -22,15 +23,18 @@ export default class Login extends Component {
                 if (response.ok) {
                     this.setState({msg: 'Login realizado com sucesso!'})
                     return response.text();
-                    
                 } else {
-                    this.setState({msg: 'Nao foi possivel realizar o login!'})
-                    return "no token";
+                    throw new Error('Nao foi possivel realizar o login!');
                 }
             })
             .then(token => {
                 console.log(token);
-            });
+                localStorage.setItem('auth-token', token)
+                browserHistory.push('/timeline')
+            })
+            .catch(error => {
+                this.setState({msg: error.message})
+            })
     }
 
     render() {
