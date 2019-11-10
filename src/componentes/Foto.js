@@ -75,7 +75,7 @@ export default class Foto extends Component {
         return (
             <div className="foto">
               <FotoHeader/>
-              <img alt="foto" className="foto-src" srcset="https://scontent-qro1-1.cdninstagram.com/vp/84acbfcb4e07fa596f1ccbce1c21ed9d/5E5BC7C4/t51.2885-15/sh0.08/e35/p640x640/70464354_185239982509700_6569608568274160865_n.jpg?_nc_ht=scontent-qro1-1.cdninstagram.com&_nc_cat=108 640w,https://scontent-qro1-1.cdninstagram.com/vp/c7fedf873d4f82a6d3ee35f3b0180dfb/5E4052C4/t51.2885-15/sh0.08/e35/p750x750/70464354_185239982509700_6569608568274160865_n.jpg?_nc_ht=scontent-qro1-1.cdninstagram.com&_nc_cat=108 750w,https://scontent-qro1-1.cdninstagram.com/vp/5e2b4d8f0df1a5721548a1eeaafa9901/5E4B8421/t51.2885-15/e35/p1080x1080/70464354_185239982509700_6569608568274160865_n.jpg?_nc_ht=scontent-qro1-1.cdninstagram.com&_nc_cat=108 1080w"/>
+              <img alt="foto" className="foto-src" srcSet="https://scontent-qro1-1.cdninstagram.com/vp/84acbfcb4e07fa596f1ccbce1c21ed9d/5E5BC7C4/t51.2885-15/sh0.08/e35/p640x640/70464354_185239982509700_6569608568274160865_n.jpg?_nc_ht=scontent-qro1-1.cdninstagram.com&_nc_cat=108 640w,https://scontent-qro1-1.cdninstagram.com/vp/c7fedf873d4f82a6d3ee35f3b0180dfb/5E4052C4/t51.2885-15/sh0.08/e35/p750x750/70464354_185239982509700_6569608568274160865_n.jpg?_nc_ht=scontent-qro1-1.cdninstagram.com&_nc_cat=108 750w,https://scontent-qro1-1.cdninstagram.com/vp/5e2b4d8f0df1a5721548a1eeaafa9901/5E4B8421/t51.2885-15/e35/p1080x1080/70464354_185239982509700_6569608568274160865_n.jpg?_nc_ht=scontent-qro1-1.cdninstagram.com&_nc_cat=108 1080w"/>
               <FotoInfo/>
               <FotoAtualizacoes/>
             </div>
