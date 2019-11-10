@@ -22,6 +22,13 @@ Docker version for MySQL <br/>
 To run back-end use `run_all.sh` inside back-end folder. <br/>
 then, access: http://localhost:8080/gera/dados to generate records on database. <br/>
 
+`São gerados os seguintes usuários e suas senhas:
+
+usuário = alots, senha = 123456;
+usuário = rafael, senha = 123456;
+usuário = vitor, senha = 123456
+Você pode usar qualquer um desses para logar, quando for necessário, na aplicação.`
+
 ## Available Scripts
 
 In the project directory, you can run:
