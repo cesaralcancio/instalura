@@ -2,9 +2,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Version
 
+### `front end`
 This project use NVM version 0.34.0<br/>
 Node version v10.15.3<br/>
 Create React App Version 3.0.1<br/>
+
+### `back end`
+Java version <br/>
+- java version "1.8.0_201" <br/>
+- Java(TM) SE Runtime Environment (build 1.8.0_201-b09) <br/>
+- Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode) <br/>
+
+Docker version for MySQL <br/>
+- Docker version 18.09.2, build 6247962 <br/>
 
 ## Available Scripts
 
