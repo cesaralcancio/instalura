@@ -17,6 +17,11 @@ Java version <br/>
 Docker version for MySQL <br/>
 - Docker version 18.09.2, build 6247962 <br/>
 
+## Run back-end
+
+To run back-end use `run_all.sh` inside back-end folder. <br/>
+then, access: http://localhost:8080/gera/dados to generate records on database. <br/>
+
 ## Available Scripts
 
 In the project directory, you can run:
