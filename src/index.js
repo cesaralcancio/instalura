@@ -8,9 +8,15 @@ import Login from './componentes/Login';
 import Logout from './componentes/Logout';
 import {Router, Route, browserHistory} from 'react-router';
 import * as serviceWorker from './serviceWorker';
+import {matchPattern} from 'react-router/lib/PatternUtils';
 
 function verificaAutenticacao(nextState, replace) {
-    if (localStorage.getItem('auth-token') == null) {
+    const resultado = matchPattern('/timeline(/:login)', nextState.location.pathname);
+    console.log(resultado)
+    const enderecoPrivadoTimeline = resultado.paramValues[0] === undefined;
+    console.log(enderecoPrivadoTimeline)
+
+    if (enderecoPrivadoTimeline && localStorage.getItem('auth-token') == null) {
         replace('/?msg=voce precisa estar autenticado para acessar o endereco.');
     }
 }
@@ -19,7 +25,7 @@ ReactDOM.render(
     (
         <Router history={browserHistory}>
             <Route path="/" component={Login} />
-            <Route path="/timeline" component={App} onEnter={verificaAutenticacao} />
+            <Route path="/timeline(/:login)" component={App} onEnter={verificaAutenticacao} />
             <Route path="/logout" component={Logout} />
         </Router>
     ),
