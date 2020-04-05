@@ -1,6 +1,30 @@
-import {listagem, comentario, like} from '../action/actioncreator';
+import {listagem, comentario, like, pesquisa, notificacao} from '../action/actioncreator';
 
 export default class LogicaTimeline {
+
+    static pesquisa(loginPesquisadoValue) {
+      return dispatch => {
+        const url = `http://localhost:8080/api/public/fotos/${loginPesquisadoValue}`;
+        fetch(url)
+          .then(response => {
+            if (response.ok) {
+              return response.json()
+            } else {
+            }
+          })
+          .then(fotos => {
+            console.log(fotos)
+            if (fotos.length === 0) {
+              dispatch(notificacao('User not found.'));
+            } else {
+              dispatch(notificacao('User found.'));
+            }
+
+            dispatch(pesquisa(fotos));
+            return fotos;
+          });
+      }
+    }
 
     static lista(url) {
       return dispatch => {

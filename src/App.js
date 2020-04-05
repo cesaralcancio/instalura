@@ -3,16 +3,18 @@ import Header from './componentes/Header';
 import Timeline from './componentes/Timeline';
 import thunkMiddleware from 'redux-thunk';
 import {timeline} from './reducers/timeline'
-import {createStore, applyMiddleware} from 'redux';
+import {header} from './reducers/header'
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 
-const reduxStore = createStore(timeline, applyMiddleware(thunkMiddleware));
+const reducers = combineReducers({timeline,header});
+const reduxStore = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 class App extends Component {
   render() {
     return (
       <div id="root">
         <div className="main">
-          <Header/>
+          <Header store={reduxStore}/>
           <Timeline login={this.props.params.login} store={reduxStore}/>
           </div>
       </div>

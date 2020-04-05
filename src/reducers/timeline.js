@@ -33,6 +33,9 @@ export function timeline(state=new List(), action) {
 
         return newLista;
     }
+    if (action.type === "PESQUISA") {
+        return new List(action.fotos);
+    }
 
     return state;
 }

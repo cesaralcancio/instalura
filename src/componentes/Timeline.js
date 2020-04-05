@@ -33,7 +33,7 @@ export default class Timeline extends Component {
     // recebia um callback e esse callback era justamente o setStatus
     componentWillMount() {
         this.props.store.subscribe(() => {
-          this.setState({fotos: this.props.store.getState()});
+          this.setState({fotos: this.props.store.getState().timeline});
         });
     }
 
