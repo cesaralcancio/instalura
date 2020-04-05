@@ -1,3 +1,5 @@
+import {listagem, comentario, like} from '../action/actioncreator';
+
 export default class LogicaTimeline {
 
     static lista(url) {
@@ -6,20 +8,20 @@ export default class LogicaTimeline {
           .then(response => response.json())
           .then(fotos => {
               this.fotos = fotos;
-              dispatch({type: 'LISTAGEM', fotos: fotos})
+              dispatch(listagem(fotos))
               return fotos;
           });
       }
     }
 
-    static comenta(fotoId, comentario) {
+    static comenta(fotoId, textoComentario) {
       return dispatch => {
         const token = localStorage.getItem('auth-token');
         const url = `http://localhost:8080/api/fotos/${fotoId}/comment?X-AUTH-TOKEN=${token}`;
         const requestInfo = {
           method: "POST",
           // body: JSON.stringify({texto: this.comentario.value}),
-          body: JSON.stringify({texto: comentario.value}),
+          body: JSON.stringify({texto: textoComentario.value}),
           headers: new Headers({
             'Content-type': 'application/json'
           })
@@ -34,7 +36,7 @@ export default class LogicaTimeline {
             }
           })
           .then(novoComentario => {
-            dispatch({type: 'COMENTARIO', fotoId, novoComentario});
+            dispatch(comentario(fotoId, novoComentario));
             return novoComentario;
           });
       }
@@ -53,7 +55,7 @@ export default class LogicaTimeline {
               throw new Error("Nao foi possivel realizar o like na foto");
             }
           }).then(liker => {
-            dispatch({type: 'LIKE', fotoId, liker});
+            dispatch(like(fotoId, liker));
           });
       }
     }

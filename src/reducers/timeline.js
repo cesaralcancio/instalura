@@ -1,22 +1,26 @@
-export function timeline(state=[], action) {
+import {List} from 'immutable';
+
+export function timeline(state=new List(), action) {
     
     if (action.type === "LISTAGEM") {
-        return action.fotos;
+        return new List(action.fotos);
     }
     if (action.type === "COMENTARIO") {
+        const newLista = new List(state);
         const fotoId = action.fotoId;
         const novoComentario = action.novoComentario;
 
-        const fotoAchada = state.find(foto => foto.id === fotoId);
+        const fotoAchada = newLista.find(foto => foto.id === fotoId);
         fotoAchada.comentarios.push(novoComentario);
         
-        return state;
+        return newLista;
     }
     if (action.type === "LIKE") {
+        const newLista = new List(state);
         const fotoId = action.fotoId;
         const liker = action.liker;
 
-        const fotoAchada = state.find(foto => foto.id === fotoId);
+        const fotoAchada = newLista.find(foto => foto.id === fotoId);
         fotoAchada.likeada = !fotoAchada.likeada;
 
         const possivelLiker = fotoAchada.likers.find(likerAtual => likerAtual.login === liker.login);
@@ -27,7 +31,7 @@ export function timeline(state=[], action) {
             fotoAchada.likers = novosLikers;
         }
 
-        return state;
+        return newLista;
     }
 
     return state;
