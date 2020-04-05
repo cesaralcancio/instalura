@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FotoItem from './FotoItem';
 import { CSSTransitionGroup } from 'react-transition-group' // ES6
-// var ReactCSSTransitionGroup = require('react-addons-css-transition-group'); 
+import TimelineStore from '../logicas/TimelineStore'
 
 export default class Timeline extends Component {
 
@@ -20,17 +20,21 @@ export default class Timeline extends Component {
             url = `http://localhost:8080/api/public/fotos/${login}`
         }
 
-        this.props.store.lista(url);
-    }
-
-    componentWillMount() {
-        this.props.store.subscribe(fotos => {
-          this.setState({fotos});
-        });
+        this.props.store.dispatch(TimelineStore.lista(url));
     }
 
     componentDidMount() {
         this.carregaFotos();
+    }
+
+    // a magica ta aqui, a cada vez que o redux atualiza a store, 
+    // tem esse subscribe que atualiza o atributo aqui, e ai atualiza todos os filhos
+    // antes, esse subscribe era da store que fizemos com o PuSub que tinha um subscribe e que 
+    // recebia um callback e esse callback era justamente o setStatus
+    componentWillMount() {
+        this.props.store.subscribe(() => {
+          this.setState({fotos: this.props.store.getState()});
+        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -41,11 +45,11 @@ export default class Timeline extends Component {
     }
 
     like(fotoId) {
-      this.props.store.like(fotoId);
+      this.props.store.dispatch(TimelineStore.like(fotoId));
     }
 
     comenta(fotoId, comentario) {
-      this.props.store.comenta(fotoId, comentario);
+      this.props.store.dispatch(TimelineStore.comenta(fotoId, comentario));
     }
 
     render() {

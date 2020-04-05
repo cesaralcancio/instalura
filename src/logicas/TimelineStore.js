@@ -1,26 +1,19 @@
-import Pubsub from 'pubsub-js';
-
 export default class LogicaTimeline {
 
-    constructor(fotos) {
-        if (fotos === undefined) {
-            this.fotos = [];
-        } else {
-            this.fotos = fotos;
-        }
-    }
-
-    lista(url) {
+    static lista(url) {
+      return dispatch => {
         fetch(url)
-        .then(response => response.json())
-        .then(fotos => {
-            Pubsub.publish('timeline', fotos);
-            this.fotos = fotos;
-        });
+          .then(response => response.json())
+          .then(fotos => {
+              this.fotos = fotos;
+              dispatch({type: 'LISTAGEM', fotos: fotos})
+              return fotos;
+          });
+      }
     }
 
-    comenta(fotoId, comentario) {
-        // const fotoId = this.props.foto.id;
+    static comenta(fotoId, comentario) {
+      return dispatch => {
         const token = localStorage.getItem('auth-token');
         const url = `http://localhost:8080/api/fotos/${fotoId}/comment?X-AUTH-TOKEN=${token}`;
         const requestInfo = {
@@ -31,7 +24,7 @@ export default class LogicaTimeline {
             'Content-type': 'application/json'
           })
         };
-  
+
         fetch(url, requestInfo)
           .then(response => {
             if (response.ok) {
@@ -41,17 +34,17 @@ export default class LogicaTimeline {
             }
           })
           .then(novoComentario => {
-            const fotoAchada = this.fotos.find(foto => foto.id === fotoId);
-            fotoAchada.comentarios.push(novoComentario);
-
-            Pubsub.publish('timeline', this.fotos);
-          })
+            dispatch({type: 'COMENTARIO', fotoId, novoComentario});
+            return novoComentario;
+          });
+      }
     }
 
-    like(fotoId) {
+    static like(fotoId) {
+      return (dispatch) => {
         const authToken = localStorage.getItem('auth-token');
-        // const fotoId = this.props.foto.id;
         const url = `http://localhost:8080/api/fotos/${fotoId}/like?X-AUTH-TOKEN=${authToken}`;
+
         fetch(url, {method: "POST"})
           .then(response => {
             if (response.ok) {
@@ -60,25 +53,8 @@ export default class LogicaTimeline {
               throw new Error("Nao foi possivel realizar o like na foto");
             }
           }).then(liker => {
-            const fotoAchada = this.fotos.find(foto => foto.id === fotoId);
-            fotoAchada.likeada = !fotoAchada.likeada;
-  
-            const possivelLiker = fotoAchada.likers.find(likerAtual => likerAtual.login === liker.login);
-            if (possivelLiker === undefined) {
-              fotoAchada.likers.push(liker);
-            } else {
-              const novosLikers = fotoAchada.likers.filter(likerAtual => likerAtual.login !== liker.login);
-              fotoAchada.likers = novosLikers;
-            }
-
-            Pubsub.publish('timeline', this.fotos);
+            dispatch({type: 'LIKE', fotoId, liker});
           });
-    }
-
-    subscribe(callback) {
-        Pubsub.subscribe('timeline', (topico, fotos) => {
-            callback(fotos);
-            // this.setState({fotos});
-        });
+      }
     }
 }
